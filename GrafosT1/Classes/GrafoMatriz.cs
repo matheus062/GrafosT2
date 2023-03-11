@@ -90,6 +90,16 @@ namespace GrafosT1.Classes
             }
         }
 
+        public override bool ExisteAresta(int origem, int destino)
+        {
+            if (Matriz[origem, destino] > 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public void ImprimirGrafoMatriz()
         {
             Console.Write("  ");

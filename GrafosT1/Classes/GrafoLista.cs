@@ -59,6 +59,19 @@ namespace GrafosT1.Classes
             base.Arestas++;
         }
 
+        public override bool ExisteAresta(int origem, int destino)
+        {
+            foreach (var aresta in Lista[origem])
+            {
+                if (aresta.Destino == destino)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public void ImprimeGrafoLista()
         {
             for (int i = 0; i < Vertices; i++)

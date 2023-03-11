@@ -24,6 +24,13 @@ Console.WriteLine("Grafo Linha com novo vertice e aresta");
 Console.WriteLine("\r");
 grafoLista.ImprimeGrafoLista();
 
+Console.WriteLine("\r");
+Console.WriteLine("Existe aresta nos vertices 1 e 2?");
+Console.WriteLine(grafoLista.ExisteAresta(1, 2));
+
+Console.WriteLine("\r");
+Console.WriteLine("Existe aresta nos vertices 3 e 0?");
+Console.WriteLine(grafoLista.ExisteAresta(3, 0));
 
 Console.WriteLine("\r"); 
 Console.WriteLine("Grafo Matriz");
@@ -41,3 +48,11 @@ grafoMatriz.AdicionarAresta(3, 0, 5);
 // Imprimindo grafo
 
 grafoMatriz.ImprimirGrafoMatriz();
+
+Console.WriteLine("\r");
+Console.WriteLine("Existe aresta nos vertices 1 e 2?");
+Console.WriteLine(grafoMatriz.ExisteAresta(1, 2));
+
+Console.WriteLine("\r");
+Console.WriteLine("Existe aresta nos vertices 3 e 1?");
+Console.WriteLine(grafoMatriz.ExisteAresta(3, 1));

@@ -27,6 +27,8 @@ namespace GrafosT1.Classes
 
         public abstract void AdicionarAresta(int origem, int destino, int peso = 0);
 
+        public abstract bool ExisteAresta(int origem, int destino);
+
         public void AdicionarVertice()
         {
             vertices++;
