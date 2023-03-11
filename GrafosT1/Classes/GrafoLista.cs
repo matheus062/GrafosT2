@@ -9,8 +9,15 @@ namespace GrafosT1.Classes
     public class GrafoLista: Grafos
     {
         public List<Aresta>[] Lista;
-        public GrafoLista(bool direcionado, bool ponderado, int vertices) : base(direcionado, ponderado, vertices)
+        public List<string> NomesVertices;
+        public GrafoLista(bool direcionado, bool ponderado, int vertices, List<string> nomesVertices) : base(direcionado, ponderado, vertices)
         {
+            if (vertices != nomesVertices.Count())
+            {
+                throw new Exception("A quantidade de nomes deve respeitar a quantidade de vertices");
+            }
+
+            NomesVertices = nomesVertices;
             Lista = new List<Aresta>[vertices];
             for (int i = 0; i < vertices; i++)
             {
@@ -23,7 +30,12 @@ namespace GrafosT1.Classes
             return Lista;
         }
 
-        public void AdicionarVertice()
+        public string GetNomeVertice(int indice)
+        {
+            return NomesVertices[indice];
+        }
+
+        public void AdicionarVertice(string nome)
         {
             base.AdicionarVertice();
             List<Aresta>[] novaLista = new List<Aresta>[Vertices];
@@ -33,6 +45,8 @@ namespace GrafosT1.Classes
             }
             novaLista[Vertices - 1] = new List<Aresta>();
             Lista = novaLista;
+
+            NomesVertices.Add(nome);
         }
 
         public override void AdicionarAresta(int origem, int destino, int peso = 0)
@@ -49,7 +63,7 @@ namespace GrafosT1.Classes
         {
             for (int i = 0; i < Vertices; i++)
             {
-                Console.Write($"Vertice {i}: ");
+                Console.Write(GetNomeVertice(i));
                 foreach (var aresta in Lista[i])
                 {
                     Console.Write($"({aresta.Destino}, {aresta.Peso})");

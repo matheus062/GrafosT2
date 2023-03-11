@@ -9,10 +9,17 @@ namespace GrafosT1.Classes
     public class GrafoMatriz: Grafos
     {
         public int[,] Matriz;
+        public List<string> NomesVertices;
 
-        public GrafoMatriz(bool direcionado, bool ponderado, int vertices) : base(direcionado, ponderado, vertices)
+        public GrafoMatriz(bool direcionado, bool ponderado, int vertices, List<string> nomesVertices) : base(direcionado, ponderado, vertices)
         {
+            if (vertices != nomesVertices.Count())
+            {
+                throw new Exception("A quantidade de nomes deve respeitar a quantidade de vertices");
+            }
+
             Matriz = new int[vertices, vertices];
+            NomesVertices = nomesVertices;
             for (int i = 0; i < vertices; i++)
             {
                 for (int j = 0; j < vertices; j++)
@@ -28,7 +35,7 @@ namespace GrafosT1.Classes
             return Matriz;
         }
 
-        public void AdicionarVertice()
+        public void AdicionarVertice(string nome)
         {
             base.AdicionarVertice();
 
@@ -42,6 +49,12 @@ namespace GrafosT1.Classes
                 }
             }
             Matriz = novaMatriz;
+
+            NomesVertices.Add(nome);
+        }
+        public string GetNomeVertice(int indice)
+        {
+            return NomesVertices[indice];
         }
 
         public override void AdicionarAresta(int origem, int destino, int peso = 0)
@@ -82,13 +95,13 @@ namespace GrafosT1.Classes
             Console.Write("  ");
             for (int i = 0; i < Vertices; i++)
             {
-                Console.Write(i + " ");
+                Console.Write(GetNomeVertice(i) + " ");
             }
             Console.WriteLine();
 
             for (int i = 0; i < Vertices; i++)
             {
-                Console.Write(i + " ");
+                Console.Write(GetNomeVertice(i) + " ");
                 for (int j = 0; j < Vertices; j++)
                 {
                     int peso = Matriz[i, j];
