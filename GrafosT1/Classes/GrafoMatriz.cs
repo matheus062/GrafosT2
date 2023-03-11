@@ -8,7 +8,7 @@ namespace GrafosT1.Classes
 {
     public class GrafoMatriz: Grafos
     {
-        private int[,] Matriz { get; }
+        public int[,] Matriz { get; }
 
         public GrafoMatriz(bool direcionado, bool ponderado, int vertices) : base(direcionado, ponderado, vertices)
         {

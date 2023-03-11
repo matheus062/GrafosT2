@@ -8,7 +8,7 @@ namespace GrafosT1.Classes
 {
     public class GrafoLista: Grafos
     {
-        private List<Aresta>[] Lista { get; }
+        public List<Aresta>[] Lista { get; }
 
         public GrafoLista(bool direcionado, bool ponderado, int vertices) : base(direcionado, ponderado, vertices)
         {
