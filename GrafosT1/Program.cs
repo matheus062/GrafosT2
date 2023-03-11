@@ -1,23 +1,45 @@
-﻿// See https://aka.ms/new-console-template for more information
-using GrafosT1.Classes;
+﻿using GrafosT1.Classes;
 
 Console.WriteLine("Meus Grafos", "\n");
 
-Grafos g1 = new Grafos(true, false, 5);
-GrafoLista gl1 = new GrafoLista(true, false, 5);
-GrafoMatriz gm1 = new GrafoMatriz(true, false, 5);
+Console.WriteLine("Grafo Lista", "\n");
 
-Console.WriteLine("Grafo!");
-Console.WriteLine(g1.Direcionado);
-Console.WriteLine(g1.Ponderado);
-Console.WriteLine(g1.Vertices);
-Console.WriteLine("Grafo Linha!", "\n");
-Console.WriteLine(gl1.Direcionado);
-Console.WriteLine(gl1.Ponderado);
-Console.WriteLine(gl1.Vertices);
-Console.WriteLine(gl1.Lista);
-Console.WriteLine("Grafo Matriz", "\n");
-Console.WriteLine(gm1.Direcionado);
-Console.WriteLine(gm1.Ponderado);
-Console.WriteLine(gm1.Vertices);
-Console.WriteLine(gm1.Matriz);
+GrafoLista grafoLista = new GrafoLista(false, true, 3);
+
+// Adiciona algumas arestas
+grafoLista.AdicionarAresta(0, 1, 2);
+grafoLista.AdicionarAresta(1, 2, 3);
+grafoLista.AdicionarAresta(2, 0, 1);
+
+// Exibe a lista de adjacência
+grafoLista.ImprimeGrafoLista();
+
+// Adiciona um novo vértice e exibe a nova lista de adjacência
+grafoLista.AdicionarVertice();
+grafoLista.AdicionarAresta(3, 2, 5);
+
+grafoLista.ImprimeGrafoLista();
+
+
+Console.WriteLine("\n", "Grafo Matriz", "\n");
+
+GrafoMatriz grafoMatriz = new GrafoMatriz(false, true, 4);
+
+// Adicionando arestas
+grafoMatriz.AdicionarAresta(0, 1, 3);
+grafoMatriz.AdicionarAresta(1, 2, 2);
+grafoMatriz.AdicionarAresta(2, 3, 4);
+grafoMatriz.AdicionarAresta(3, 0, 5);
+
+// Imprimindo grafo
+
+grafoMatriz.ImprimirGrafoMatriz();
+
+//for (int i = 0; i < grafoMatriz.Vertices; i++)
+//{
+//    for (int j = 0; j < grafoMatriz.Vertices; j++)
+//    {
+//        Console.Write(grafoMatriz.Matriz[i, j] + "\t");
+//    }
+//    Console.WriteLine();
+//}

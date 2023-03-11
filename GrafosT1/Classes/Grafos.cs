@@ -6,19 +6,30 @@ using System.Threading.Tasks;
 
 namespace GrafosT1.Classes
 {
-    public class Grafos
+    public  abstract class Grafos
     {
         public bool Direcionado { get; }
         
         public bool Ponderado { get; }
 
-        public int Vertices { get; }
+        private int vertices;
+
+        public int Vertices { get => vertices; set => vertices = value; }
+        public int Arestas { get; protected set; }
 
         public Grafos(bool direcionado, bool ponderado, int vertices)
         {
             Direcionado = direcionado;
             Ponderado = ponderado;
             Vertices = vertices;
+            Arestas = 0;
+        }
+
+        public abstract void AdicionarAresta(int origem, int destino, int peso = 0);
+
+        public void AdicionarVertice()
+        {
+            vertices++;
         }
 
     }
