@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GrafosT1.Classes
 {
-    public class GrafoMatriz: Grafos
+    public class GrafoMatriz : Grafos
     {
         public int[,] Matriz;
         public List<string> NomesVertices;
@@ -98,6 +98,16 @@ namespace GrafosT1.Classes
             }
 
             return false;
+        }
+
+        public override int PesoAresta(int origem, int destino)
+        {
+            if (Matriz[origem, destino] > 0)
+            {
+                return Matriz[origem, destino];
+            }
+
+            return 0;
         }
 
         public void ImprimirGrafoMatriz()

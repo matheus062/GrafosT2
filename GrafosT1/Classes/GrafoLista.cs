@@ -72,6 +72,19 @@ namespace GrafosT1.Classes
             return false;
         }
 
+        public override int PesoAresta(int origem, int destino)
+        {
+            foreach (var aresta in Lista[origem])
+            {
+                if (aresta.Destino == destino)
+                {
+                    return aresta.Peso;
+                }
+            }
+
+            return 0;
+        }
+
         public void ImprimeGrafoLista()
         {
             for (int i = 0; i < Vertices; i++)

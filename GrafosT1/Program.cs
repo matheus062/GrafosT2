@@ -25,12 +25,20 @@ Console.WriteLine("\r");
 grafoLista.ImprimeGrafoLista();
 
 Console.WriteLine("\r");
-Console.WriteLine("Existe aresta nos vertices 1 e 2?");
+Console.WriteLine("Existe aresta nos vertices B e C?");
 Console.WriteLine(grafoLista.ExisteAresta(1, 2));
 
 Console.WriteLine("\r");
-Console.WriteLine("Existe aresta nos vertices 3 e 0?");
+Console.WriteLine("Peso aresta nos vertices B e C:");
+Console.WriteLine(grafoLista.PesoAresta(1, 2));
+
+Console.WriteLine("\r");
+Console.WriteLine("Existe aresta nos vertices D e A?");
 Console.WriteLine(grafoLista.ExisteAresta(3, 0));
+
+Console.WriteLine("\r");
+Console.WriteLine("Peso aresta nos vertices D e A:");
+Console.WriteLine(grafoLista.PesoAresta(3, 0));
 
 Console.WriteLine("\r"); 
 Console.WriteLine("Grafo Matriz");
@@ -50,9 +58,17 @@ grafoMatriz.AdicionarAresta(3, 0, 5);
 grafoMatriz.ImprimirGrafoMatriz();
 
 Console.WriteLine("\r");
-Console.WriteLine("Existe aresta nos vertices 1 e 2?");
+Console.WriteLine("Existe aresta nos vertices B e C?");
 Console.WriteLine(grafoMatriz.ExisteAresta(1, 2));
 
 Console.WriteLine("\r");
-Console.WriteLine("Existe aresta nos vertices 3 e 1?");
+Console.WriteLine("Peso aresta nos vertices B e C:");
+Console.WriteLine(grafoMatriz.PesoAresta(1, 2));
+
+Console.WriteLine("\r");
+Console.WriteLine("Existe aresta nos vertices D e B?");
 Console.WriteLine(grafoMatriz.ExisteAresta(3, 1));
+
+Console.WriteLine("\r");
+Console.WriteLine("Peso aresta nos vertices D e B:");
+Console.WriteLine(grafoMatriz.PesoAresta(3, 1));
