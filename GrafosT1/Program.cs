@@ -34,12 +34,3 @@ grafoMatriz.AdicionarAresta(3, 0, 5);
 // Imprimindo grafo
 
 grafoMatriz.ImprimirGrafoMatriz();
-
-//for (int i = 0; i < grafoMatriz.Vertices; i++)
-//{
-//    for (int j = 0; j < grafoMatriz.Vertices; j++)
-//    {
-//        Console.Write(grafoMatriz.Matriz[i, j] + "\t");
-//    }
-//    Console.WriteLine();
-//}
