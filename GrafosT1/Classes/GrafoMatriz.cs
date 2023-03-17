@@ -1,151 +1,225 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection.Emit;
+using System.Text;
+using System.Threading.Tasks;
 
-//namespace GrafosT1.Classes
-//{
-//    public class GrafoMatriz : Grafos
-//    {
-//        public int[,] Matriz;
-//        public List<string> NomesVertices;
+namespace GrafosT1.Classes
+{
+    public class GrafoMatriz : Grafos
+    {
+        public int[,] Matriz;
+        public List<string> NomesVertices;
 
-//        public GrafoMatriz(bool direcionado, bool ponderado, int vertices, List<string> nomesVertices) : base(direcionado, ponderado, vertices)
-//        {
-//            if (vertices != nomesVertices.Count())
-//            {
-//                throw new Exception("A quantidade de nomes deve respeitar a quantidade de vertices");
-//            }
+        public GrafoMatriz(bool direcionado, bool ponderado, List<string> nomesVertices) : base(direcionado, ponderado)
+        {
+            Matriz = new int[nomesVertices.Count, nomesVertices.Count];
+            NomesVertices = nomesVertices;
+            Vertices = nomesVertices.Count;
 
-//            Matriz = new int[vertices, vertices];
-//            NomesVertices = nomesVertices;
-//            for (int i = 0; i < vertices; i++)
-//            {
-//                for (int j = 0; j < vertices; j++)
-//                {
-//                    Matriz[i, j] = -1; // valor inválido para indicar que não há aresta
-//                }
-//            }
-//            Vertices = vertices;
-//        }
+            for (int i = 0; i < nomesVertices.Count; i++)
+            {
+                for (int j = 0; j < nomesVertices.Count; j++)
+                {
+                    if (i == j)
+                    {
+                        Matriz[i, j] = -1;
 
-//        public int[,] GetMatriz()
-//        {
-//            return Matriz;
-//        }
+                        continue;
+                    }
 
-//        public void AdicionarVertice(string nome)
-//        {
-//            base.AdicionarVertice();
+                    InserirAresta(i, j, 0);
+                }
+            }
+        }
 
-//            // Adicionar uma nova linha e uma nova coluna na matriz de adjacência
-//            int[,] novaMatriz = new int[Vertices, Vertices];
-//            for (int i = 0; i < Vertices - 1; i++)
-//            {
-//                for (int j = 0; j < Vertices - 1; j++)
-//                {
-//                    novaMatriz[i, j] = Matriz[i, j];
-//                }
-//            }
-//            Matriz = novaMatriz;
+        public int[,] GetMatriz()
+        {
+            return Matriz;
+        }
 
-//            NomesVertices.Add(nome);
-//        }
-//        public string GetNomeVertice(int indice)
-//        {
-//            return NomesVertices[indice];
-//        }
+        public override bool InserirVertice(string nome)
+        {
+            Vertices++;
+            int[,] novaMatriz = new int[Vertices, Vertices];
+
+            for (int i = 0; i < Vertices - 1; i++)
+            {
+                for (int j = 0; j < Vertices; j++)
+                {
+                    if (i == Vertices - 1)
+                    {
+                        novaMatriz[Vertices - 1, j] = 0;
+
+                        continue;
+                    }
+                    else if (j == Vertices - 1)
+                    {
+                        novaMatriz[i, Vertices - 1] = 0;
+
+                        continue;
+                    }
+
+                    novaMatriz[i, j] = Matriz[i, j];
+                }
+            }
+
+            novaMatriz[Vertices - 1, Vertices - 1] = -1;
+            Matriz = novaMatriz;
+            NomesVertices.Add(nome);
+
+            return true;
+        }
+        public override string LabelVertice(int indice)
+        {
+            return NomesVertices[indice];
+        }
 
 
-//        public override void AdicionarAresta(int origem, int destino, int peso = 0)
-//        {
-//            // Verificar se a origem e destino são válidos
-//            if (origem < 0 || origem >= Vertices || destino < 0 || destino >= Vertices)
-//                throw new Exception("Os vértices de origem e destino devem estar dentro do intervalo [0, Vertices-1]");
+        public override bool InserirAresta(int origem, int destino, int peso = 1)
+        {
+            if (origem < 0 || origem >= Vertices || destino < 0 || destino >= Vertices)
+            {
+                throw new Exception("Os vértices de origem e destino devem estar dentro do intervalo [0, Vertices-1]");
+            }
+            else if (origem == destino)
+            {
+                return false;
+            }
 
-//            // Adicionar a aresta na matriz de adjacência
-//            if (Ponderado)
-//            {
-//                if (!Direcionado)
-//                {
-//                    Matriz[origem, destino] = peso;
-//                    Matriz[destino, origem] = peso;
-//                }
-//                else
-//                {
-//                    Matriz[origem, destino] = peso;
-//                }
-//            }
-//            else
-//            {
-//                if (!Direcionado)
-//                {
-//                    Matriz[origem, destino] = 1;
-//                    Matriz[destino, origem] = 1;
-//                }
-//                else
-//                {
-//                    Matriz[origem, destino] = 1;
-//                }
-//            }
-//        }
+            peso = Ponderado ? peso : 1;
+            Matriz[origem, destino] = peso;
+            Arestas++;
 
-//        public override bool ExisteAresta(int origem, int destino)
-//        {
-//            if (Matriz[origem, destino] > 0)
-//            {
-//                return true;
-//            }
+            if (!Direcionado)
+            {
+                Matriz[destino, origem] = peso;
+                Arestas++;
+            }
 
-//            return false;
-//        }
+            return true;
+        }
 
-//        public override int PesoAresta(int origem, int destino)
-//        {
-//            if (Matriz[origem, destino] > 0)
-//            {
-//                return Matriz[origem, destino];
-//            }
+        public override bool ExisteAresta(int origem, int destino)
+        {
+            return (Matriz[origem, destino] > 0) ? true : false;
+        }
 
-//            return 0;
-//        }
+        public override float PesoAresta(int origem, int destino)
+        {
+            return (Matriz[origem, destino] > 0) ? Matriz[origem, destino] : 0;
+        }
 
-//        public void ImprimirGrafoMatriz()
-//        {
-//            Console.Write("  ");
-//            for (int i = 0; i < Vertices; i++)
-//            {
-//                Console.Write(GetNomeVertice(i) + " ");
-//            }
-//            Console.WriteLine();
+        public override void ImprimeGrafo()
+        {
+            Console.Write("  ");
 
-//            for (int i = 0; i < Vertices; i++)
-//            {
-//                Console.Write(GetNomeVertice(i) + " ");
-//                for (int j = 0; j < Vertices; j++)
-//                {
-//                    int peso = Matriz[i, j];
-//                    if (Ponderado && peso > 0)
-//                    {
-//                        Console.Write(peso + " ");
-//                    }
-//                    else if (!Ponderado && peso == 1)
-//                    {
-//                        Console.Write("1 ");
-//                    }
-//                    else
-//                    {
-//                        Console.Write("0 ");
-//                    }
-//                }
-//                Console.WriteLine();
-//            }
-//        }
+            for (int i = 0; i < Vertices; i++)
+            {
+                Console.Write(LabelVertice(i) + " ");
+            }
 
-//        public override void RemoveAresta(int origem, int destino)
-//        {
-//            //base.RemoveAresta(origem, destino);
-//        }
-//    }
-//}
+            Console.WriteLine();
+
+            for (int i = 0; i < Vertices; i++)
+            {
+                Console.Write(LabelVertice(i) + " ");
+
+                for (int j = 0; j < Vertices; j++)
+                {
+                    int peso = Matriz[i, j];
+                    Console.Write(peso + " ");
+                }
+
+                Console.WriteLine();
+            }
+        }
+
+        public override bool RemoverAresta(int origem, int destino)
+        {
+            Matriz[origem, destino] = 0;
+            Arestas--;
+
+            if (!Direcionado)
+            {
+                Matriz[destino, origem] = 0;
+                Arestas--;
+            }
+
+            return true;
+        }
+
+        public override bool RemoverVertice(string label)
+        {
+            if (Vertices == 0)
+            {
+                return false;
+            }
+
+            int indexRemover = NomesVertices.IndexOf(label);
+
+            if (indexRemover == -1)
+            {
+                return false;
+            }
+
+            NomesVertices.Remove(label);
+            Vertices--;
+
+            int indexI = 0, indexJ = 0;
+            int[,] novaMatriz = new int[Vertices, Vertices];
+
+            for (int i = 0; i < Vertices + 1; i++)
+            {
+                if (i == indexRemover)
+                {
+                    continue;
+                }
+
+                for (int j = 0; j < Vertices + 1; j++)
+                {
+                    if (j == indexRemover)
+                    {
+                        //if (Matriz[i, j] > 0)
+                        //{
+                        //    Arestas--;
+                        //}
+
+                        continue;
+                    }
+
+                    novaMatriz[indexI, indexJ] = Matriz[i, j];
+                    indexJ++;
+                }
+                
+                indexJ = 0;
+                indexI++;
+            }
+
+            Matriz = novaMatriz;
+
+            return true;
+        }
+
+        public override List<int> RetornarVizinhos(int origem)
+        {
+            List<int> lista = new List<int>();
+
+            for (var i = 0; i < Vertices; i++)
+            {
+                if (i == origem)
+                {
+                    continue;
+                }
+
+                if (Matriz[origem, i] > 0)
+                {
+                    lista.Add(i);
+                }
+            }
+
+            return lista;
+        }
+    }
+}
