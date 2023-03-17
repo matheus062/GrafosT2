@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GrafosT1.Classes
 {
-    public class GrafoLista: Grafos
+    public class GrafoLista : Grafos
     {
         public List<Aresta>[] Lista;
         public List<string> NomesVertices;
@@ -85,6 +85,23 @@ namespace GrafosT1.Classes
             return 0;
         }
 
+        public List<int> RetornaVizinhos(int indice)
+        {
+            var vizinhos = new List<int>();
+
+            if (indice >= Lista.Count() || indice < 0)
+                return vizinhos;
+
+            vizinhos = Lista.ElementAt(indice).Select(aresta => aresta.Peso).ToList();
+            return vizinhos;
+        }
+
+        public override void RemoveAresta(int origem, int destino)
+        {
+            Lista[origem].Clear();
+            Lista[destino].Clear();            
+        }
+
         public void ImprimeGrafoLista()
         {
             for (int i = 0; i < Vertices; i++)
@@ -97,9 +114,21 @@ namespace GrafosT1.Classes
                 Console.WriteLine("\r");
             }
         }
+
+        public void ImprimeArestaAdjacente(int i)
+        {
+            List<int> vizinhos = this.RetornaVizinhos(i);
+            
+            foreach(int vizinho in vizinhos)
+            {
+                Console.WriteLine($"{vizinho} ");
+            }
+        }
+
+
     }
 
-    public struct Aresta
+    public class Aresta
     {
         public int Destino;
         public int Peso;
@@ -109,5 +138,6 @@ namespace GrafosT1.Classes
             Destino = destino;
             Peso = peso;
         }
+        
     }
 }

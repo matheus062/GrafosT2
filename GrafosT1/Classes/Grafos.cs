@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace GrafosT1.Classes
 {
-    public  abstract class Grafos
+    public abstract class Grafos
     {
         public bool Direcionado { get; }
-        
+
         public bool Ponderado { get; }
 
         private int vertices;
@@ -30,6 +30,8 @@ namespace GrafosT1.Classes
         public abstract bool ExisteAresta(int origem, int destino);
 
         public abstract int PesoAresta(int origem, int destino);
+
+        public abstract void RemoveAresta(int origem, int destino);
 
         public void AdicionarVertice()
         {

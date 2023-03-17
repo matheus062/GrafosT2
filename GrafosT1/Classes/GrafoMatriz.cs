@@ -56,6 +56,7 @@ namespace GrafosT1.Classes
         {
             return NomesVertices[indice];
         }
+       
 
         public override void AdicionarAresta(int origem, int destino, int peso = 0)
         {
@@ -140,6 +141,11 @@ namespace GrafosT1.Classes
                 }
                 Console.WriteLine();
             }
+        }
+
+        public override void RemoveAresta(int origem, int destino)
+        {
+            //base.RemoveAresta(origem, destino);
         }
     }
 }
