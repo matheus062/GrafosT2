@@ -10,16 +10,12 @@ namespace GrafosT1.Classes
     {
         public List<Aresta>[] Lista;
         public List<string> NomesVertices;
-        public GrafoLista(bool direcionado, bool ponderado, int vertices, List<string> nomesVertices) : base(direcionado, ponderado, vertices)
+        public GrafoLista(bool direcionado, bool ponderado, List<string> nomesVertices) : base(direcionado, ponderado, nomesVertices.Count)
         {
-            if (vertices != nomesVertices.Count())
-            {
-                throw new Exception("A quantidade de nomes deve respeitar a quantidade de vertices");
-            }
-
             NomesVertices = nomesVertices;
-            Lista = new List<Aresta>[vertices];
-            for (int i = 0; i < vertices; i++)
+            Lista = new List<Aresta>[nomesVertices.Count];
+
+            for (int i = 0; i < nomesVertices.Count; i++)
             {
                 Lista[i] = new List<Aresta>();
             }
@@ -30,33 +26,113 @@ namespace GrafosT1.Classes
             return Lista;
         }
 
-        public string GetNomeVertice(int indice)
+        public override bool InserirVertice(string label)
         {
-            return NomesVertices[indice];
-        }
+            List<Aresta>[] novaLista = new List<Aresta>[++Vertices];
 
-        public void AdicionarVertice(string nome)
-        {
-            base.AdicionarVertice();
-            List<Aresta>[] novaLista = new List<Aresta>[Vertices];
             for (int i = 0; i < Vertices - 1; i++)
             {
                 novaLista[i] = Lista[i];
             }
+
             novaLista[Vertices - 1] = new List<Aresta>();
             Lista = novaLista;
+            NomesVertices.Add(label);
 
-            NomesVertices.Add(nome);
+            return true;
         }
 
-        public override void AdicionarAresta(int origem, int destino, int peso = 0)
+        public override bool RemoverVertice(string label)
+        {
+            if (Vertices == 0)
+            {
+                return false;
+            }
+
+
+            int indexRemover = NomesVertices.IndexOf(label);
+
+            if (indexRemover == -1)
+            {
+                return false;
+            }
+
+            int indexNovo = 0;
+            List<Aresta>[] novaLista = new List<Aresta>[Vertices - 1];
+
+            NomesVertices.Remove(label);
+
+            for (int i = 0; i < Vertices; i++)
+            {
+                if (indexRemover == i)
+                {
+                    continue;
+                }
+
+                foreach (var aresta in Lista[i])
+                {
+                    if (aresta.Destino == indexRemover)
+                    {
+                        Lista[i].Remove(aresta);
+
+                        break;
+                    }
+                }
+
+                novaLista[indexNovo] = Lista[i];
+                indexNovo++;
+            }
+
+            Lista = novaLista;
+            Vertices--;
+
+            return true;
+        }
+
+        public override string LabelVertice(int indice)
+        {
+            return NomesVertices[indice];
+        }
+
+
+        public override List<int> RetornarVizinhos(int vertice)
+        {
+            List<int> vizinhos = new();
+
+            if (vertice >= Lista.Length || vertice < 0)
+            {
+                return vizinhos;
+            }
+
+            vizinhos = Lista.ElementAt(vertice).Select(aresta => aresta.Peso).ToList();
+
+            return vizinhos;
+        }
+
+        public override bool InserirAresta(int origem, int destino, int peso = 1)
         {
             if (!Direcionado)
             {
                 Lista[destino].Add(new Aresta(origem, peso));
             }
+
             Lista[origem].Add(new Aresta(destino, peso));
-            base.Arestas++;
+            Arestas++;
+
+            return true;
+        }
+
+        public override bool RemoverAresta(int origem, int destino)
+        {
+            Lista[origem].Remove(Lista[origem].First(a => a.Destino == destino));
+
+            if (!Direcionado)
+            {
+                Lista[destino].Remove(Lista[destino].First(b => b.Destino == origem));
+            }
+
+            return true;
+
         }
 
         public override bool ExisteAresta(int origem, int destino)
@@ -72,7 +148,7 @@ namespace GrafosT1.Classes
             return false;
         }
 
-        public override int PesoAresta(int origem, int destino)
+        public override float PesoAresta(int origem, int destino)
         {
             foreach (var aresta in Lista[origem])
             {
@@ -85,28 +161,13 @@ namespace GrafosT1.Classes
             return 0;
         }
 
-        public List<int> RetornaVizinhos(int indice)
-        {
-            var vizinhos = new List<int>();
 
-            if (indice >= Lista.Count() || indice < 0)
-                return vizinhos;
 
-            vizinhos = Lista.ElementAt(indice).Select(aresta => aresta.Peso).ToList();
-            return vizinhos;
-        }
-
-        public override void RemoveAresta(int origem, int destino)
-        {
-            Lista[origem].Clear();
-            Lista[destino].Clear();            
-        }
-
-        public void ImprimeGrafoLista()
+        public override void ImprimeGrafo()
         {
             for (int i = 0; i < Vertices; i++)
             {
-                Console.Write(GetNomeVertice(i));
+                Console.Write(LabelVertice(i));
                 foreach (var aresta in Lista[i])
                 {
                     Console.Write($"({aresta.Destino}, {aresta.Peso})");
@@ -117,14 +178,13 @@ namespace GrafosT1.Classes
 
         public void ImprimeArestaAdjacente(int i)
         {
-            List<int> vizinhos = this.RetornaVizinhos(i);
-            
-            foreach(int vizinho in vizinhos)
+            List<int> vizinhos = this.RetornarVizinhos(i);
+
+            foreach (int vizinho in vizinhos)
             {
                 Console.WriteLine($"{vizinho} ");
             }
         }
-
 
     }
 
@@ -138,6 +198,6 @@ namespace GrafosT1.Classes
             Destino = destino;
             Peso = peso;
         }
-        
+
     }
 }

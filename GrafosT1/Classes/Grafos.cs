@@ -1,14 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GrafosT1.Classes
+﻿namespace GrafosT1.Classes
 {
     public abstract class Grafos
     {
+        public Grafos(bool direcionado, bool ponderado, int vertices = 0)
+        {
+            Direcionado = direcionado;
+            Ponderado = ponderado;
+            Vertices = vertices;
+            Arestas = 0;
+        }
+
         public bool Direcionado { get; }
 
         public bool Ponderado { get; }
@@ -17,31 +18,23 @@ namespace GrafosT1.Classes
 
         public int Arestas { get; protected set; }
 
-        public Grafos(bool direcionado, bool ponderado)
-        {
-            Direcionado = direcionado;
-            Ponderado = ponderado;
-            Vertices = 0;
-            Arestas = 0;
-        }
+        public abstract bool InserirVertice(string label);
 
-        public abstract bool inserirVertice(string label);
+        public abstract bool RemoverVertice(string label);
 
-        public abstract bool removerVertice(string label);
+        public abstract string LabelVertice(int indice);
 
-        public abstract string labelVertice(int indice);
+        public abstract List<int> RetornarVizinhos(int vertice);
 
-        public abstract List<int> retornarVizinhos(int vertice);
+        public abstract bool InserirAresta(int origem, int destino, int peso = 1);
 
-        public abstract bool inserirAresta(int origem, int destino, int peso = 1);
+        public abstract bool RemoverAresta(int origem, int destino);
 
-        public abstract bool removerAresta(int origem, int destino);
+        public abstract bool ExisteAresta(int origem, int destino);
 
-        public abstract bool existeAresta(int origem, int destino);
+        public abstract float PesoAresta(int origem, int destino);
 
-        public abstract float pesoAresta(int origem, int destino);
-
-        public abstract void imprimeGrafo();
+        public abstract void ImprimeGrafo();
 
     }
 
