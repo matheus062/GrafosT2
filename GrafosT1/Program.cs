@@ -40,12 +40,13 @@ Console.WriteLine("\r");
 Console.WriteLine("Peso aresta nos vertices D e A:");
 Console.WriteLine(grafoLista.PesoAresta(3, 0));
 
-Console.WriteLine("\r"); 
+Console.WriteLine("\r");
 Console.WriteLine("Grafo Matriz");
 Console.WriteLine("\r");
 
-List<string> nomesMatriz = new List<string> {"A", "B", "C", "D"};
+List<string> nomesMatriz = new List<string> { "A", "B", "C", "D" };
 GrafoMatriz grafoMatriz = new GrafoMatriz(false, true, 4, nomesMatriz);
+
 
 // Adicionando arestas
 grafoMatriz.AdicionarAresta(0, 1, 3);
@@ -72,3 +73,13 @@ Console.WriteLine(grafoMatriz.ExisteAresta(3, 1));
 Console.WriteLine("\r");
 Console.WriteLine("Peso aresta nos vertices D e B:");
 Console.WriteLine(grafoMatriz.PesoAresta(3, 1));
+
+Console.WriteLine("\r");
+Console.WriteLine("Exibe vizinhos");
+grafoLista.ImprimeArestaAdjacente(1);
+
+Console.WriteLine("\r");
+Console.WriteLine("Removendo as Arestas de D e B");
+grafoLista.RemoveAresta(3, 1);
+Console.WriteLine("\r");
+Console.WriteLine("0");
