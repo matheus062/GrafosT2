@@ -1,40 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace GrafosT1.Classes
 {
-    public  abstract class Grafos
+    public abstract class Grafos
     {
         public bool Direcionado { get; }
-        
+
         public bool Ponderado { get; }
 
-        private int vertices;
+        public int Vertices { get; protected set; }
 
-        public int Vertices { get => vertices; set => vertices = value; }
         public int Arestas { get; protected set; }
 
-        public Grafos(bool direcionado, bool ponderado, int vertices)
+        public Grafos(bool direcionado, bool ponderado)
         {
             Direcionado = direcionado;
             Ponderado = ponderado;
-            Vertices = vertices;
+            Vertices = 0;
             Arestas = 0;
         }
 
-        public abstract void AdicionarAresta(int origem, int destino, int peso = 0);
+        public abstract bool inserirVertice(string label);
 
-        public abstract bool ExisteAresta(int origem, int destino);
+        public abstract bool removerVertice(string label);
 
-        public abstract int PesoAresta(int origem, int destino);
+        public abstract string labelVertice(int indice);
 
-        public void AdicionarVertice()
-        {
-            vertices++;
-        }
+        public abstract List<int> retornarVizinhos(int vertice);
+
+        public abstract bool inserirAresta(int origem, int destino, int peso = 1);
+
+        public abstract bool removerAresta(int origem, int destino);
+
+        public abstract bool existeAresta(int origem, int destino);
+
+        public abstract float pesoAresta(int origem, int destino);
+
+        public abstract void imprimeGrafo();
 
     }
+
 }
