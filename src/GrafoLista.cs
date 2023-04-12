@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GrafosT1.Classes
+﻿namespace Graph
 {
-    public class GrafoLista : Grafos
+    public class GrafoLista : Graph
     {
         public List<Aresta>[] Lista;
         public List<string> NomesVertices;
@@ -26,25 +20,25 @@ namespace GrafosT1.Classes
             return Lista;
         }
 
-        public override bool InserirVertice(string label)
+        public override bool vertexInsert(string label)
         {
-            List<Aresta>[] novaLista = new List<Aresta>[++Vertices];
+            List<Aresta>[] novaLista = new List<Aresta>[++Vertexes];
 
-            for (int i = 0; i < Vertices - 1; i++)
+            for (int i = 0; i < Vertexes - 1; i++)
             {
                 novaLista[i] = Lista[i];
             }
 
-            novaLista[Vertices - 1] = new List<Aresta>();
+            novaLista[Vertexes - 1] = new List<Aresta>();
             Lista = novaLista;
             NomesVertices.Add(label);
 
             return true;
         }
 
-        public override bool RemoverVertice(string label)
+        public override bool vertexDelete(string label)
         {
-            if (Vertices == 0)
+            if (Vertexes == 0)
             {
                 return false;
             }
@@ -58,11 +52,11 @@ namespace GrafosT1.Classes
             }
 
             int indexNovo = 0;
-            List<Aresta>[] novaLista = new List<Aresta>[Vertices - 1];
+            List<Aresta>[] novaLista = new List<Aresta>[Vertexes - 1];
 
             NomesVertices.Remove(label);
 
-            for (int i = 0; i < Vertices; i++)
+            for (int i = 0; i < Vertexes; i++)
             {
                 if (indexRemover == i)
                 {
@@ -84,18 +78,18 @@ namespace GrafosT1.Classes
             }
 
             Lista = novaLista;
-            Vertices--;
+            Vertexes--;
 
             return true;
         }
 
-        public override string LabelVertice(int indice)
+        public override string vertexLabel(int indice)
         {
             return NomesVertices[indice];
         }
 
 
-        public override List<int> RetornarVizinhos(int vertice)
+        public override List<int> getNeighbors(int vertice)
         {
             List<int> vizinhos = new();
 
@@ -109,24 +103,24 @@ namespace GrafosT1.Classes
             return vizinhos;
         }
 
-        public override bool InserirAresta(int origem, int destino, int peso = 1)
+        public override bool nodeInsert(int origem, int destino, int peso = 1)
         {
-            if (!Direcionado)
+            if (!Directed)
             {
                 Lista[destino].Add(new Aresta(origem, peso));
             }
 
             Lista[origem].Add(new Aresta(destino, peso));
-            Arestas++;
+            Nodes++;
 
             return true;
         }
 
-        public override bool RemoverAresta(int origem, int destino)
+        public override bool nodeDelete(int origem, int destino)
         {
             Lista[origem].Remove(Lista[origem].First(a => a.Destino == destino));
 
-            if (!Direcionado)
+            if (!Directed)
             {
                 Lista[destino].Remove(Lista[destino].First(b => b.Destino == origem));
             }
@@ -135,7 +129,7 @@ namespace GrafosT1.Classes
 
         }
 
-        public override bool ExisteAresta(int origem, int destino)
+        public override bool nodeExists(int origem, int destino)
         {
             foreach (var aresta in Lista[origem])
             {
@@ -148,7 +142,7 @@ namespace GrafosT1.Classes
             return false;
         }
 
-        public override float PesoAresta(int origem, int destino)
+        public override float nodeWeight(int origem, int destino)
         {
             foreach (var aresta in Lista[origem])
             {
@@ -163,11 +157,11 @@ namespace GrafosT1.Classes
 
 
 
-        public override void ImprimeGrafo()
+        public override void graphPrint()
         {
-            for (int i = 0; i < Vertices; i++)
+            for (int i = 0; i < Vertexes; i++)
             {
-                Console.Write(LabelVertice(i));
+                Console.Write(vertexLabel(i));
                 foreach (var aresta in Lista[i])
                 {
                     Console.Write($"({aresta.Destino}, {aresta.Peso})");
@@ -178,7 +172,7 @@ namespace GrafosT1.Classes
 
         public void ImprimeArestaAdjacente(int i)
         {
-            List<int> vizinhos = this.RetornarVizinhos(i);
+            List<int> vizinhos = this.getNeighbors(i);
 
             foreach (int vizinho in vizinhos)
             {

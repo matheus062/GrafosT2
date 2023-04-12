@@ -11,28 +11,28 @@ List<string> nomesLista = new() { "A", "B", "C" };
 GrafoLista grafoLista = new(false, true, nomesLista);
 
 // Adiciona algumas arestas
-grafoLista.InserirAresta(0, 1, 10);
-grafoLista.InserirAresta(1, 2, 15);
-grafoLista.InserirAresta(2, 0, 20);
+grafoLista.nodeInsert(0, 1, 10);
+grafoLista.nodeInsert(1, 2, 15);
+grafoLista.nodeInsert(2, 0, 20);
 
 // Imprime o grafo
-grafoLista.ImprimeGrafo();
+grafoLista.graphPrint();
 
 // Adiciona um novo vértice e exibe a nova lista de adjacência
-grafoLista.InserirVertice("D");
-grafoLista.InserirVertice("E");
+grafoLista.vertexInsert("D");
+grafoLista.vertexInsert("E");
 
-grafoLista.InserirAresta(3, 2, 5);
-grafoLista.InserirAresta(4, 2, 5);
+grafoLista.nodeInsert(3, 2, 5);
+grafoLista.nodeInsert(4, 2, 5);
 Console.WriteLine("\r");
 Console.WriteLine("Grafo Linha com novo vertice e aresta");
 Console.WriteLine("\r");
-grafoLista.ImprimeGrafo();
+grafoLista.graphPrint();
 
-grafoLista.RemoverAresta(1, 2);
-grafoLista.RemoverVertice("A");
+grafoLista.nodeDelete(1, 2);
+grafoLista.vertexDelete("A");
 Console.WriteLine("\r");
-grafoLista.ImprimeGrafo();
+grafoLista.graphPrint();
 
 //Console.WriteLine("\r");
 //Console.WriteLine("Existe aresta nos vertices B e C?");
