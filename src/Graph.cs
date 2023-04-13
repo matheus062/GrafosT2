@@ -10,43 +10,43 @@ namespace Graph
         public Graph(
             bool directed = false,
             bool weighted = false,
-            int vertexes = 0,
-            int nodes = 0
+            int nodes = 0,
+            int edges = 0
         )
         {
             Directed = directed;
             Weighted = weighted;
-            Vertexes = vertexes;
             Nodes = nodes;
+            Edges = edges;
         }
 
         public bool Directed { get; protected set; }
 
         public bool Weighted { get; protected set; }
 
-        public int Vertexes { get; protected set; }
-
         public int Nodes { get; protected set; }
 
-        public abstract bool vertexInsert(string name);
+        public int Edges { get; protected set; }
 
-        public abstract bool vertexDelete(string name);
+        public abstract bool NodeInsert(string name);
 
-        public abstract string vertexLabel(int vertex);
+        public abstract bool NodeDelete(string name);
 
-        public abstract List<int> getNeighbors(int vertex);
+        public abstract string NodeLabel(int node);
 
-        public abstract bool nodeInsert(int from, int to, int weight = 1);
+        public abstract List<int> GetNeighbors(int node);
 
-        public abstract bool nodeDelete(int from, int to);
+        public abstract bool EdgeInsert(int from, int to, int weight = 1);
 
-        public abstract bool nodeExists(int from, int to);
+        public abstract bool EdgeDelete(int from, int to);
 
-        public abstract float nodeWeight(int from, int to);
+        public abstract bool EdgeExists(int from, int to);
 
-        public abstract void graphPrint();
+        public abstract float EdgeWeight(int from, int to);
 
-        public bool loadFile(string path)
+        public abstract void GraphPrint();
+
+        public bool LoadFile(string path)
         {
             if (!File.Exists(path)) throw new Exception("Arquivo não encontrado.");
 
@@ -54,13 +54,13 @@ namespace Graph
 
             foreach (string line in File.ReadLines(path))
             {
-                string[] items = line.Split(' ');
+                string[] items = line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
                 if (!setted)
                 {
                     setted = true;
-                    Vertexes = Convert.ToInt32(items[0]);
-                    Nodes = Convert.ToInt32(items[1]);
+                    Nodes = Convert.ToInt32(items[0]);
+                    Edges = Convert.ToInt32(items[1]);
                     Directed = Convert.ToBoolean(items[2]);
                     Weighted = Convert.ToBoolean(items[3]);
 
