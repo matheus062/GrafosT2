@@ -118,6 +118,11 @@
             return true;
         }
 
+        public override int NodeIndex(string name)
+        {
+            return NodeNames.Contains(name) ? NodeNames.IndexOf(name) : -1;
+        }
+
         public override string NodeLabel(int node)
         {
             return NodeNames[node];
@@ -161,7 +166,6 @@
             if (!Directed)
             {
                 Matrix[to, from] = weight;
-                Edges++;
             }
 
             return true;
@@ -175,7 +179,6 @@
             if (!Directed)
             {
                 Matrix[from, to] = 0;
-                Edges--;
             }
 
             return true;

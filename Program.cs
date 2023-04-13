@@ -1,4 +1,4 @@
-﻿using GrafosT1.Classes;
+﻿using Graph;
 
 Console.WriteLine("Meus Grafos");
 Console.WriteLine("\r");
@@ -6,92 +6,28 @@ Console.WriteLine("\r");
 Console.WriteLine("Grafo Lista");
 Console.WriteLine("\r");
 
-// Cria grafo de lista com alguns vértices já inseridos
-List<string> nomesLista = new() { "A", "B", "C" };
-GrafoLista grafoLista = new(false, true, nomesLista);
+GraphList graphList = new();
 
-// Adiciona algumas arestas
-grafoLista.nodeInsert(0, 1, 10);
-grafoLista.nodeInsert(1, 2, 15);
-grafoLista.nodeInsert(2, 0, 20);
+//graphList.NodeInsert("A");
+//graphList.NodeInsert("B");
+//graphList.NodeInsert("C");
 
-// Imprime o grafo
-grafoLista.graphPrint();
+//graphList.EdgeInsert(0, 1, 10);
+//graphList.EdgeInsert(1, 2, 15);
+//graphList.EdgeInsert(2, 0, 20);
 
-// Adiciona um novo vértice e exibe a nova lista de adjacência
-grafoLista.vertexInsert("D");
-grafoLista.vertexInsert("E");
+graphList.LoadFile("C:\\Users\\mathe\\Documents\\Faculdade\\7º Período\\Grafos\\T2 - Grafos\\graph.txt");
+graphList.GraphPrint();
 
-grafoLista.nodeInsert(3, 2, 5);
-grafoLista.nodeInsert(4, 2, 5);
-Console.WriteLine("\r");
-Console.WriteLine("Grafo Linha com novo vertice e aresta");
-Console.WriteLine("\r");
-grafoLista.graphPrint();
+GraphMatrix graphMatrix = new();
 
-grafoLista.nodeDelete(1, 2);
-grafoLista.vertexDelete("A");
-Console.WriteLine("\r");
-grafoLista.graphPrint();
+//graphMatrix.NodeInsert("A");
+//graphMatrix.NodeInsert("B");
+//graphMatrix.NodeInsert("C");
 
-//Console.WriteLine("\r");
-//Console.WriteLine("Existe aresta nos vertices B e C?");
-//Console.WriteLine(grafoLista.ExisteAresta(1, 2));
+//graphMatrix.EdgeInsert(0, 1, 10);
+//graphMatrix.EdgeInsert(1, 2, 15);
+//graphMatrix.EdgeInsert(2, 0, 20);
 
-//Console.WriteLine("\r");
-//Console.WriteLine("Peso aresta nos vertices B e C:");
-//Console.WriteLine(grafoLista.PesoAresta(1, 2));
-
-//Console.WriteLine("\r");
-//Console.WriteLine("Existe aresta nos vertices D e A?");
-//Console.WriteLine(grafoLista.ExisteAresta(3, 0));
-
-//Console.WriteLine("\r");
-//Console.WriteLine("Peso aresta nos vertices D e A:");
-//Console.WriteLine(grafoLista.PesoAresta(3, 0));
-
-
-
-//Console.WriteLine("\r");
-//Console.WriteLine("Grafo Matriz");
-//Console.WriteLine("\r");
-
-//List<string> nomesMatriz = new List<string> { "A", "B", "C", "D" };
-//GrafoMatriz grafoMatriz = new GrafoMatriz(false, true, 4, nomesMatriz);
-
-
-//// Adicionando arestas
-//grafoMatriz.AdicionarAresta(0, 1, 3);
-//grafoMatriz.AdicionarAresta(1, 2, 2);
-//grafoMatriz.AdicionarAresta(2, 3, 4);
-//grafoMatriz.AdicionarAresta(3, 0, 5);
-
-//// Imprimindo grafo
-
-//grafoMatriz.ImprimirGrafoMatriz();
-
-//Console.WriteLine("\r");
-//Console.WriteLine("Existe aresta nos vertices B e C?");
-//Console.WriteLine(grafoMatriz.ExisteAresta(1, 2));
-
-//Console.WriteLine("\r");
-//Console.WriteLine("Peso aresta nos vertices B e C:");
-//Console.WriteLine(grafoMatriz.PesoAresta(1, 2));
-
-//Console.WriteLine("\r");
-//Console.WriteLine("Existe aresta nos vertices D e B?");
-//Console.WriteLine(grafoMatriz.ExisteAresta(3, 1));
-
-//Console.WriteLine("\r");
-//Console.WriteLine("Peso aresta nos vertices D e B:");
-//Console.WriteLine(grafoMatriz.PesoAresta(3, 1));
-
-//Console.WriteLine("\r");
-//Console.WriteLine("Exibe vizinhos");
-//grafoLista.ImprimeArestaAdjacente(1);
-
-//Console.WriteLine("\r");
-//Console.WriteLine("Removendo as Arestas de D e B");
-//grafoLista.RemoveAresta(3, 1);
-//Console.WriteLine("\r");
-//Console.WriteLine("0");
+graphMatrix.LoadFile("C:\\Users\\mathe\\Documents\\Faculdade\\7º Período\\Grafos\\T2 - Grafos\\graph.txt");
+graphMatrix.GraphPrint();

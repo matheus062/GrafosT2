@@ -90,11 +90,15 @@
             return true;
         }
 
-        public override string NodeLabel(int index)
+        public override int NodeIndex(string name)
         {
-            return NodeNames[index];
+            return NodeNames.Contains(name) ? NodeNames.IndexOf(name) : -1;
         }
 
+        public override string NodeLabel(int index)
+        {
+            return NodeNames[index] ?? "";
+        }
 
         public override List<int> GetNeighbors(int node)
         {

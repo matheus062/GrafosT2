@@ -32,6 +32,8 @@ namespace Graph
 
         public abstract bool NodeDelete(string name);
 
+        public abstract int NodeIndex(string name);
+
         public abstract string NodeLabel(int node);
 
         public abstract List<int> GetNeighbors(int node);
@@ -51,6 +53,8 @@ namespace Graph
             if (!File.Exists(path)) throw new Exception("Arquivo não encontrado.");
 
             bool setted = false;
+            int nodes = 0;
+            int edges = 0;
 
             foreach (string line in File.ReadLines(path))
             {
@@ -59,17 +63,26 @@ namespace Graph
                 if (!setted)
                 {
                     setted = true;
-                    Nodes = Convert.ToInt32(items[0]);
-                    Edges = Convert.ToInt32(items[1]);
-                    Directed = Convert.ToBoolean(items[2]);
-                    Weighted = Convert.ToBoolean(items[3]);
+                    nodes = Convert.ToInt32(items[0]);
+                    edges = Convert.ToInt32(items[1]);
+                    Directed = Convert.ToBoolean(Convert.ToInt32(items[2]));
+                    Weighted = Convert.ToBoolean(Convert.ToInt32(items[3]));
 
                     continue;
                 }
 
-                // TODO : Processar as outras linhas do arquivo.
+                string nodeFrom = Convert.ToString(items[0]);
+                string nodeTo = Convert.ToString(items[1]);
+                int weight = Weighted ? Convert.ToInt32(items[2]) : 0;
+
+                if (this.NodeIndex(nodeFrom) == -1) this.NodeInsert(nodeFrom);
+                if (this.NodeIndex(nodeTo) == -1) this.NodeInsert(nodeTo);
+
+                this.EdgeInsert(this.NodeIndex(nodeFrom), this.NodeIndex(nodeTo), weight);
             }
 
+            if (Nodes != nodes) throw new Exception("O número de vértices informado no cabeçalho do arquivo difere da quantidade inserida.");
+            if (Edges != edges) throw new Exception("O número de arestas informado no cabeçalho do arquivo difere da quantidade inserida.");
 
             return true;
         }
