@@ -44,7 +44,7 @@ namespace Graph
 
         public abstract bool EdgeExists(int from, int to);
 
-        public abstract float EdgeWeight(int from, int to);
+        public abstract int EdgeWeight(int from, int to);
 
         public abstract void GraphPrint();
 

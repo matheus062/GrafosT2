@@ -1,4 +1,5 @@
-﻿using Graph;
+﻿using GrafosT2.src;
+using Graph;
 
 Console.WriteLine("Meus Grafos");
 Console.WriteLine("\r");
@@ -6,28 +7,30 @@ Console.WriteLine("\r");
 Console.WriteLine("Grafo Lista");
 Console.WriteLine("\r");
 
-GraphList graphList = new();
+GraphList graphList = new(false, true);
 
-//graphList.NodeInsert("A");
-//graphList.NodeInsert("B");
-//graphList.NodeInsert("C");
+graphList.NodeInsert("A");
+graphList.NodeInsert("B");
+graphList.NodeInsert("C");
+graphList.NodeInsert("D");
+graphList.NodeInsert("E");
 
-//graphList.EdgeInsert(0, 1, 10);
-//graphList.EdgeInsert(1, 2, 15);
-//graphList.EdgeInsert(2, 0, 20);
+graphList.EdgeInsert(0, 2, 5);
+graphList.EdgeInsert(0, 3, 4);
+graphList.EdgeInsert(0, 1, 3);
+graphList.EdgeInsert(0, 4, 8);
+graphList.EdgeInsert(2, 4, 2);
+graphList.EdgeInsert(1, 4, 10);
+graphList.EdgeInsert(1, 3, -2);
 
-graphList.LoadFile("C:\\Users\\mathe\\Documents\\Faculdade\\7º Período\\Grafos\\T2 - Grafos\\graph.txt");
+//graphList.LoadFile("C:\\Users\\natan\\source\\repos\\GrafosT2\\graph.txt");
 graphList.GraphPrint();
 
-GraphMatrix graphMatrix = new();
 
-//graphMatrix.NodeInsert("A");
-//graphMatrix.NodeInsert("B");
-//graphMatrix.NodeInsert("C");
+Console.WriteLine("Imprimindo Dikstra");
+Dijkstra dijkstra = new Dijkstra(graphList);
+dijkstra.FuncaoDijkstra(0);
+dijkstra.PrintTest();
 
-//graphMatrix.EdgeInsert(0, 1, 10);
-//graphMatrix.EdgeInsert(1, 2, 15);
-//graphMatrix.EdgeInsert(2, 0, 20);
 
-graphMatrix.LoadFile("C:\\Users\\mathe\\Documents\\Faculdade\\7º Período\\Grafos\\T2 - Grafos\\graph.txt");
-graphMatrix.GraphPrint();
+

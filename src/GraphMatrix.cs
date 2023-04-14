@@ -189,7 +189,7 @@
             return (Matrix[from, to] > 0) ? true : false;
         }
 
-        public override float EdgeWeight(int from, int to)
+        public override int EdgeWeight(int from, int to)
         {
             return (Matrix[from, to] > 0) ? Matrix[from, to] : 0;
         }

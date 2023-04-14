@@ -153,7 +153,7 @@
             return false;
         }
 
-        public override float EdgeWeight(int from, int to)
+        public override int EdgeWeight(int from, int to)
         {
             foreach (var edge in List[from])
             {
