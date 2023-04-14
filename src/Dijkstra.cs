@@ -1,19 +1,9 @@
-﻿using Graph;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-
-namespace Graph
+﻿namespace Graph
 {
     public class Dijkstra
     {
         private List<Fragas> adjacencyList = new List<Fragas>();
         private Graph graph;
-        private int[] _distances;
         public Dijkstra(Graph graph)
         {
             this.graph = graph;
@@ -24,56 +14,66 @@ namespace Graph
             }
         }
 
-        //public void AddEdge(int source, int destination, int weight)
-        //{
-        //    adjacencyList[source].Add((destination, weight));
-        //    adjacencyList[destination].Add((source, weight));
-        //}
-
-        public int[] FuncaoDijkstra(int source)
+        public List<Fragas> FuncaoDijkstra(int source)
         {
             adjacencyList[source].distance = 0;
             List<int> neighbors = new List<int>();
-            bool allClosed = false;           
+            bool allClosed = false;
 
-           /* do
+            int edgeWeight = 0;
+
+            do
             {
                 neighbors = graph.GetNeighbors(source);
 
                 foreach (int index in neighbors)
                 {
-                    //graph.EdgeWeight(source, index)
+                    edgeWeight = graph.EdgeWeight(source, index);
 
-                    int currentVertex = GetMinimumDistance(adjacencyList[source].distance, graph.EdgeWeight(source, index));
-                }
-
-            } while (allClosed);
-
-
-            foreach (int i = 0; i < graph.Nodes - 1; i++)
-            {
-                int currentVertex = GetMinimumDistance(distances, visited);
-
-                visited[currentVertex] = true;
-
-                foreach ((int, int) neighbor in adjacencyList[currentVertex])
-                {
-                    int adjacentVertex = neighbor.Item1;
-                    int edgeWeight = neighbor.Item2;
-
-                    if (!visited[adjacentVertex] && distances[currentVertex] != int.MaxValue
-                        && distances[currentVertex] + edgeWeight < distances[adjacentVertex])
+                    if (adjacencyList[index].closed)
                     {
-                        distances[adjacentVertex] = distances[currentVertex] + edgeWeight;
+                        continue;
+                    }
+                    else if (adjacencyList[index].distance > (edgeWeight + adjacencyList[source].distance))
+                    {
+                        adjacencyList[index].distance = (edgeWeight + adjacencyList[source].distance);
+                        adjacencyList[index].lastIndex = source;
                     }
                 }
-            }
-            this._distances = distances;
 
+                adjacencyList[source].closed = true;
 
-            //return distances;
-           */
-            return new int[] { 0 };
+                int nextSource = -1;
+                int temp = 99999;
+
+                foreach (int index in neighbors)
+                {
+                    if (!adjacencyList[index].closed && (adjacencyList[index].distance < temp))
+                    {
+
+                        nextSource = index;
+                        temp = adjacencyList[index].distance;
+                    }
+                }
+
+                if (nextSource == -1)
+                {
+                    foreach (Fragas nextFragas in adjacencyList)
+                    {
+                        if (!nextFragas.closed)
+                        {
+                            nextSource = nextFragas.index;
+
+                            break;
+                        }
+                    }
+                }
+
+                source = nextSource;
+                allClosed = (nextSource == -1);
+            } while (!allClosed);
+
+            return adjacencyList;
         }
 
         private int GetMinimumDistance(int[] distances, bool[] visited)
@@ -93,36 +93,13 @@ namespace Graph
             return minVertex;
         }
 
-        public void PrintTest()
+        public void PrintTest(int source)
         {
-            //int[] distances = graph.FuncaoDijkstra();
-            for (int i = 0; i < _distances.Length; i++)
+            foreach (Fragas fraga in adjacencyList)
             {
-                Console.WriteLine($"\r\nDistância mais curta do vértice 0 ao vértice {i} é {_distances[i]}");
+                Console.WriteLine($"\r\nDistância mais curta do vértice {graph.NodeLabel(source)} {source} ao vértice {graph.NodeLabel(fraga.index)} {fraga.index} é: {adjacencyList[fraga.index].distance}");
             }
         }
-
-
-        //public void ImprimeGrafoDijkstra()
-        //{
-        //    Dijkstra graph = new Dijkstra(6);
-
-        //    graph.AddEdge(0, 1, 2);
-        //    graph.AddEdge(0, 2, 4);
-        //    graph.AddEdge(1, 2, 1);
-        //    graph.AddEdge(1, 3, 7);
-        //    graph.AddEdge(2, 4, 3);
-        //    graph.AddEdge(3, 4, 1);
-        //    graph.AddEdge(3, 5, 5);
-        //    graph.AddEdge(4, 5, 2);
-
-        //    int[] distances = graph.FuncaoDijkstra(0);
-
-        //    for (int i = 0; i < distances.Length; i++)
-        //    {
-        //        Console.WriteLine($"\r\nDistância mais curta do vértice 0 ao vértice {i} é {distances[i]}");
-        //    }
-        //}
 
     }
 
@@ -134,7 +111,7 @@ namespace Graph
         public int distance { get; set; }
         public int lastIndex { get; set; }
 
-        public Fragas(int index, bool closed = false, int distance = -1, int lastIndex = 9999)
+        public Fragas(int index, bool closed = false, int distance = 999999, int lastIndex = -1)
         {
             this.index = index;
             this.closed = closed;

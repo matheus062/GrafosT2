@@ -109,7 +109,7 @@
                 return neighbors;
             }
 
-            neighbors = List.ElementAt(node).Select(edge => edge.Weight).ToList();
+            neighbors = List.ElementAt(node).Select(edge => edge.ToNode).ToList();
 
             return neighbors;
         }

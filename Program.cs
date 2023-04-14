@@ -1,5 +1,4 @@
-﻿using GrafosT2.src;
-using Graph;
+﻿using Graph;
 
 Console.WriteLine("Meus Grafos");
 Console.WriteLine("\r");
@@ -15,13 +14,21 @@ graphList.NodeInsert("C");
 graphList.NodeInsert("D");
 graphList.NodeInsert("E");
 
-graphList.EdgeInsert(0, 2, 5);
-graphList.EdgeInsert(0, 3, 4);
+//graphList.EdgeInsert(0, 2, 5);
+//graphList.EdgeInsert(0, 3, 4);
+//graphList.EdgeInsert(0, 1, 3);
+//graphList.EdgeInsert(0, 4, 8);
+//graphList.EdgeInsert(2, 4, 2);
+//graphList.EdgeInsert(1, 4, 10);
+//graphList.EdgeInsert(1, 3, -2);
+
 graphList.EdgeInsert(0, 1, 3);
+graphList.EdgeInsert(0, 2, 5);
+graphList.EdgeInsert(0, 3, 6);
 graphList.EdgeInsert(0, 4, 8);
+graphList.EdgeInsert(1, 3, 2);
+graphList.EdgeInsert(1, 4, 11);
 graphList.EdgeInsert(2, 4, 2);
-graphList.EdgeInsert(1, 4, 10);
-graphList.EdgeInsert(1, 3, -2);
 
 //graphList.LoadFile("C:\\Users\\natan\\source\\repos\\GrafosT2\\graph.txt");
 graphList.GraphPrint();
@@ -30,7 +37,7 @@ graphList.GraphPrint();
 Console.WriteLine("Imprimindo Dikstra");
 Dijkstra dijkstra = new Dijkstra(graphList);
 dijkstra.FuncaoDijkstra(0);
-dijkstra.PrintTest();
+dijkstra.PrintTest(0);
 
 
 
