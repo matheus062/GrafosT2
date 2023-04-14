@@ -1,4 +1,5 @@
-﻿using Graph;
+﻿//using GrafosT2.src;
+using Graph;
 
 Console.WriteLine("Meus Grafos");
 Console.WriteLine("\r");
@@ -40,4 +41,13 @@ dijkstra.FuncaoDijkstra(0);
 dijkstra.PrintTest(0);
 
 
+//Console.WriteLine("Imprimindo Busca em Largura (BFS): ");
 
+//BreadthFirstSearch bfs = new BreadthFirstSearch(graphList);
+//bfs.BFS(graphList.Nodes);
+
+
+//Console.WriteLine("Imprimindo Busca em Largura (BFS): ");
+
+//DepthFirstSearch dfs = new DepthFirstSearch(graphList);
+//dfs.BuscaProfundidade(graphList.Nodes);
