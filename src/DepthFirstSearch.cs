@@ -1,50 +1,103 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Graph
+﻿namespace Graph
 {
     public class DepthFirstSearch
     {
-        //private int numVertices;
-        private List<int>[] adjacency;
+        private List<int> lifo = new List<int>();
+        private List<Fragas> adjacency = new List<Fragas>();
+        private List<int> accessed = new List<int>();
         private Graph graph;
+        private int destiny = -1;
 
         public DepthFirstSearch(Graph graph)
         {
             this.graph = graph;
-            adjacency = new List<int>[graph.Nodes];
+
             for (int i = 0; i < graph.Nodes; i++)
             {
-                adjacency[i] = new List<int>();
+                adjacency.Add(new Fragas(i));
             }
         }
 
-        public void AdicionarAresta(int origem, int destino)
+        public void StartDepth(int source, int destiny = -1)
         {
-            adjacency[origem].Add(destino);
-        }
+            this.destiny = destiny;
 
-        public void BuscaProfundidade(int verticeInicial)
-        {
-            bool[] visitado = new bool[graph.Nodes];
-            BuscaProfundidadeRecursiva(verticeInicial, visitado);
-        }
-
-        private void BuscaProfundidadeRecursiva(int vertice, bool[] visitado)
-        {
-            visitado[vertice] = true;
-            Console.Write(vertice + " ");
-
-            foreach (int adjacente in adjacency[vertice])
+            if (DepthRecursive(source))
             {
-                if (!visitado[adjacente])
+                Console.WriteLine($"Foi possível localizar na busca em profundidade entre os pontos {source} e {destiny}.");
+                Console.WriteLine("Imprimindo acessados...");
+                foreach (int item in this.accessed)
                 {
-                    BuscaProfundidadeRecursiva(adjacente, visitado);
+                    Console.Write(graph.NodeLabel(item));
+
+                    if (this.accessed.Last() != item)
+                    {
+                        Console.Write(" -> ");
+                    }
+                }
+
+                Console.WriteLine("\nImprimindo o caminho...");
+                foreach (int item in this.lifo)
+                {
+                    Console.Write(graph.NodeLabel(item));
+
+                    if (this.lifo.Last() != item)
+                    {
+                        Console.Write(" -> ");
+                    }
+                }
+
+            }
+            else
+            {
+                Console.WriteLine("Não foi possível localizar um caminho para os pontos selecionados.");
+                Console.WriteLine("Imprimindo acessados...");
+
+                foreach (int item in this.accessed)
+                {
+                    Console.Write(graph.NodeLabel(item));
+
+                    if (this.accessed.Last() != item)
+                    {
+                        Console.Write(" -> ");
+                    }
                 }
             }
+        }
+
+        private bool DepthRecursive(int source)
+        {
+            accessed.Add(source);
+            lifo.Add(source);
+
+            if (source == this.destiny)
+            {
+                return true;
+            }
+
+            List<int> neighbors = graph.GetNeighbors(source);
+
+            if (neighbors.Contains(this.destiny))
+            {
+                return DepthRecursive(this.destiny);
+            }
+
+            foreach (int item in neighbors)
+            {
+                if (adjacency.ElementAt(item).closed || lifo.Contains(item))
+                {
+                    continue;
+                }
+                else if (DepthRecursive(item))
+                {
+                    return true;
+                }
+            }
+
+            adjacency.ElementAt(source).closed = true;
+            lifo.Remove(source);
+
+            return false;
         }
     }
 }

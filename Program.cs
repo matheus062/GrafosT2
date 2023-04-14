@@ -31,14 +31,15 @@ GraphList graphList = new(false, true);
 //graphList.EdgeInsert(1, 4, 11);
 //graphList.EdgeInsert(2, 4, 2);
 
-graphList.LoadFile(System.Environment.CurrentDirectory + "/graph.txt");
+//graphList.LoadFile(System.Environment.CurrentDirectory + "/graph.txt");
+graphList.LoadFile(System.Environment.CurrentDirectory + "/graph2.txt");
 graphList.GraphPrint();
 
 
-Console.WriteLine("Imprimindo Dikstra");
-Dijkstra dijkstra = new Dijkstra(graphList);
-dijkstra.FuncaoDijkstra(0);
-dijkstra.PrintTest(0);
+//Console.WriteLine("Imprimindo Dikstra");
+//Dijkstra dijkstra = new Dijkstra(graphList);
+//dijkstra.FuncaoDijkstra(0);
+//dijkstra.PrintTest(0);
 
 
 //Console.WriteLine("Imprimindo Busca em Largura (BFS): ");
@@ -47,7 +48,7 @@ dijkstra.PrintTest(0);
 //bfs.BFS(graphList.Nodes);
 
 
-//Console.WriteLine("Imprimindo Busca em Largura (BFS): ");
+Console.WriteLine("Imprimindo Busca em Largura (BFS): ");
 
-//DepthFirstSearch dfs = new DepthFirstSearch(graphList);
-//dfs.BuscaProfundidade(graphList.Nodes);
+DepthFirstSearch dfs = new DepthFirstSearch(graphList);
+dfs.StartDepth(0, 5);
