@@ -7,6 +7,8 @@ namespace Graph
 {
     public abstract class Graph
     {
+        public List<string> NodeNames;
+
         public Graph(
             bool directed = false,
             bool weighted = false,
@@ -38,13 +40,13 @@ namespace Graph
 
         public abstract List<int> GetNeighbors(int node);
 
-        public abstract bool EdgeInsert(int from, int to, int weight = 1);
+        public abstract bool EdgeInsert(int from, int to, double weight = 1);
 
         public abstract bool EdgeDelete(int from, int to);
 
         public abstract bool EdgeExists(int from, int to);
 
-        public abstract int EdgeWeight(int from, int to);
+        public abstract double EdgeWeight(int from, int to);
 
         public abstract void GraphPrint();
 
@@ -73,15 +75,17 @@ namespace Graph
 
                 string nodeFrom = Convert.ToString(items[0]);
                 string nodeTo = Convert.ToString(items[1]);
-                int weight = Weighted ? Convert.ToInt32(items[2]) : 0;
+                double weight = Weighted ? Convert.ToDouble("0" + items[2].Replace(".", ",")) : 0;
 
                 if (this.NodeIndex(nodeFrom) == -1) this.NodeInsert(nodeFrom);
                 if (this.NodeIndex(nodeTo) == -1) this.NodeInsert(nodeTo);
 
                 this.EdgeInsert(this.NodeIndex(nodeFrom), this.NodeIndex(nodeTo), weight);
             }
+            Nodes = NodeNames.Count;
+            Edges = edges;
 
-            if (Nodes != nodes) throw new Exception("O número de vértices informado no cabeçalho do arquivo difere da quantidade inserida.");
+            //if (Nodes != nodes) throw new Exception("O número de vértices informado no cabeçalho do arquivo difere da quantidade inserida.");
             if (Edges != edges) throw new Exception("O número de arestas informado no cabeçalho do arquivo difere da quantidade inserida.");
 
             return true;

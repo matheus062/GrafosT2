@@ -2,8 +2,7 @@
 {
     public class GraphMatrix : Graph
     {
-        public int[,] Matrix;
-        public List<string> NodeNames;
+        public double[,] Matrix;
 
         public GraphMatrix(
             bool directed = false,
@@ -14,7 +13,7 @@
         ) : base(directed, weighted, nodes, edges)
         {
             NodeNames = nodeNames ?? new List<string>();
-            Matrix = new int[NodeNames.Count, NodeNames.Count];
+            Matrix = new double[NodeNames.Count, NodeNames.Count];
             Edges = NodeNames.Count;
 
             for (int i = 0; i < NodeNames.Count; i++)
@@ -36,7 +35,7 @@
         public override bool NodeInsert(string name)
         {
             Nodes++;
-            int[,] newMatrix = new int[Nodes, Nodes];
+            double[,] newMatrix = new double[Nodes, Nodes];
 
             for (int i = 0; i < Nodes - 1; i++)
             {
@@ -84,7 +83,7 @@
             Nodes--;
 
             int indexI = 0, indexJ = 0;
-            int[,] newMatrix = new int[Nodes, Nodes];
+            double[,] newMatrix = new double[Nodes, Nodes];
 
             for (int i = 0; i < Nodes + 1; i++)
             {
@@ -148,7 +147,7 @@
             return neighbors;
         }
 
-        public override bool EdgeInsert(int from, int to, int weight = 1)
+        public override bool EdgeInsert(int from, int to, double weight = 1)
         {
             if (from < 0 || from >= Nodes || to < 0 || to >= Nodes)
             {
@@ -189,7 +188,7 @@
             return (Matrix[from, to] > 0) ? true : false;
         }
 
-        public override int EdgeWeight(int from, int to)
+        public override double EdgeWeight(int from, int to)
         {
             return (Matrix[from, to] > 0) ? Matrix[from, to] : 0;
         }
@@ -211,7 +210,7 @@
 
                 for (int j = 0; j < Nodes; j++)
                 {
-                    int weight = Matrix[i, j];
+                    double weight = Matrix[i, j];
                     Console.Write(weight + " ");
                 }
 
@@ -219,7 +218,7 @@
             }
         }
 
-        public int[,] GetMatrix()
+        public double[,] GetMatrix()
         {
             return Matrix;
         }

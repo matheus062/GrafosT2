@@ -1,60 +1,100 @@
-﻿using Graph;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Graph
+﻿namespace Graph
 {
     public class BreadthFirstSearch
     {
-        //private int V; // número de vértices
-        private List<int>[] adj; // lista de adjacências
+        private List<int> fifo = new List<int>();
+        private List<Fragas> adjacency = new List<Fragas>();
+        private List<int> accessed = new List<int>();
         private Graph graph;
+        private int destiny = -1;
 
         public BreadthFirstSearch(Graph graph)
         {
-            //V = v;
             this.graph = graph;
 
-            adj = new List<int>[graph.Nodes];
             for (int i = 0; i < graph.Nodes; i++)
             {
-                adj[i] = new List<int>();
+                adjacency.Add(new Fragas(i));
             }
         }
 
-        // Faz a busca em largura a partir de um vértice inicial
-        public void BFS(int s)
+        public void StartBreadth(int source, int destiny = -1)
         {
-            // Marca todos os vértices como não visitados
-            bool[] visited = new bool[graph.Nodes];
-
-            // Cria uma fila para a busca em largura
-            Queue<int> queue = new Queue<int>();
-
-            // Marca o vértice inicial como visitado e o adiciona na fila
-            visited[s] = true;
-            queue.Enqueue(s);
-
-            while (queue.Count != 0)
+            this.destiny = destiny;
+            if (BreadthSearch(source))
             {
-                // Remove o vértice da frente da fila e o imprime
-                s = queue.Dequeue();
-                Console.Write(s + " ");
-
-                // Pega todos os vértices adjacentes do vértice removido da fila
-                // Se um vértice adjacente não foi visitado, ele é marcado como visitado e adicionado na fila
-                foreach (int i in adj[s])
+                Console.WriteLine($"Foi possível localizar na busca em profundidade entre os pontos {source} e {destiny}.");
+                Console.WriteLine("Imprimindo acessados...");
+                foreach (int item in this.accessed)
                 {
-                    if (!visited[i])
+                    Console.Write(graph.NodeLabel(item));
+
+                    if (this.accessed.Last() != item)
                     {
-                        visited[i] = true;
-                        queue.Enqueue(i);
+                        Console.Write(" -> ");
+                    }
+                }
+
+                //Console.WriteLine("\nImprimindo o caminho...");
+                //foreach (int item in this.lifo)
+                //{
+                //    Console.Write(graph.NodeLabel(item));
+
+                //    if (this.lifo.Last() != item)
+                //    {
+                //        Console.Write(" -> ");
+                //    }
+                //}
+            }
+            else
+            {
+                Console.WriteLine("Não foi possível localizar um caminho para os pontos selecionados.");
+                Console.WriteLine("Imprimindo acessados...");
+
+                foreach (int item in this.accessed)
+                {
+                    Console.Write(graph.NodeLabel(item));
+
+                    if (this.accessed.Last() != item)
+                    {
+                        Console.Write(" -> ");
                     }
                 }
             }
+
+        }
+
+        private bool BreadthSearch(int source)
+        {
+            fifo.Add(source);
+            adjacency.ElementAt(source).closed = true;
+
+            while (fifo.Count > 0)
+            {
+                int current = fifo.First();
+                fifo.RemoveAt(0);
+                accessed.Add(current);
+
+                if (current == destiny)
+                {
+                    return true;
+                }
+
+                List<int> neighbors = graph.GetNeighbors(current);
+
+                foreach (int item in neighbors)
+                {
+                    if (adjacency.ElementAt(item).closed || fifo.Contains(item))
+                    {
+                        continue;
+                    }
+
+                    fifo.Add(item);
+                    adjacency.ElementAt(item).closed = true;
+                }
+            }
+
+            return false;
         }
     }
 }

@@ -3,7 +3,6 @@
     public class GraphList : Graph
     {
         public List<Edge>[] List;
-        public List<string> NodeNames;
         public GraphList(
             bool directed = false,
             bool weighted = false,
@@ -114,7 +113,7 @@
             return neighbors;
         }
 
-        public override bool EdgeInsert(int from, int to, int weight = 1)
+        public override bool EdgeInsert(int from, int to, double weight = 1)
         {
             if (!Directed)
             {
@@ -153,7 +152,7 @@
             return false;
         }
 
-        public override int EdgeWeight(int from, int to)
+        public override double EdgeWeight(int from, int to)
         {
             foreach (var edge in List[from])
             {
@@ -196,9 +195,9 @@
     public class Edge
     {
         public int ToNode;
-        public int Weight;
+        public double Weight;
 
-        public Edge(int toNode, int weight)
+        public Edge(int toNode, double weight)
         {
             ToNode = toNode;
             Weight = weight;

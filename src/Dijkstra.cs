@@ -20,7 +20,7 @@
             List<int> neighbors = new List<int>();
             bool allClosed = false;
 
-            int edgeWeight = 0;
+            double edgeWeight = 0;
 
             do
             {
@@ -44,7 +44,7 @@
                 adjacencyList[source].closed = true;
 
                 int nextSource = -1;
-                int temp = 99999;
+                double temp = 99999;
 
                 foreach (int index in neighbors)
                 {
@@ -97,7 +97,7 @@
         {
             foreach (Fragas fraga in adjacencyList)
             {
-                Console.WriteLine($"\r\nDistância mais curta do vértice {graph.NodeLabel(source)} {source} ao vértice {graph.NodeLabel(fraga.index)} {fraga.index} é: {adjacencyList[fraga.index].distance}");
+                Console.WriteLine($"\r\nDistância mais curta do vértice {graph.NodeLabel(source)} {source} ao vértice {graph.NodeLabel(fraga.index)} {fraga.index} é: {adjacencyList[fraga.index].distance} Anterior {adjacencyList[fraga.index].lastIndex}");
             }
         }
 
@@ -108,10 +108,10 @@
     {
         public int index { get; set; }
         public bool closed { get; set; }
-        public int distance { get; set; }
+        public double distance { get; set; }
         public int lastIndex { get; set; }
 
-        public Fragas(int index, bool closed = false, int distance = 999999, int lastIndex = -1)
+        public Fragas(int index, bool closed = false, double distance = 999999, int lastIndex = -1)
         {
             this.index = index;
             this.closed = closed;

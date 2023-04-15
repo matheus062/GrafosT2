@@ -32,7 +32,7 @@ GraphList graphList = new(false, true);
 //graphList.EdgeInsert(2, 4, 2);
 
 //graphList.LoadFile(System.Environment.CurrentDirectory + "/graph.txt");
-graphList.LoadFile(System.Environment.CurrentDirectory + "/graph2.txt");
+graphList.LoadFile(System.Environment.CurrentDirectory + "/slides_modificado.txt");
 graphList.GraphPrint();
 
 
@@ -44,11 +44,10 @@ graphList.GraphPrint();
 
 //Console.WriteLine("Imprimindo Busca em Largura (BFS): ");
 
-//BreadthFirstSearch bfs = new BreadthFirstSearch(graphList);
-//bfs.BFS(graphList.Nodes);
+//DepthFirstSearch dfs = new DepthFirstSearch(graphList);
+//dfs.StartDepth(0, 4);
 
+Console.WriteLine("Imprimindo Busca em Profundidade (BFS): ");
 
-Console.WriteLine("Imprimindo Busca em Largura (BFS): ");
-
-DepthFirstSearch dfs = new DepthFirstSearch(graphList);
-dfs.StartDepth(0, 5);
+BreadthFirstSearch dfs = new BreadthFirstSearch(graphList);
+dfs.StartBreadth(0, 4);
